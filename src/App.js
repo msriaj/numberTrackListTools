@@ -28,23 +28,9 @@ function App() {
 
   };
 
-  const handlePasteFromClipboard = (event) => {
-    event.preventDefault();
-    navigator.clipboard.readText()
-      .then(text => {
-        event.target.value = text;
-      })
-      .catch(error => {
-        console.error('Error reading clipboard content: ', error);
-      });
-  };
   return (
     <div className='main'>
-
       <div className="inputArea">
-        <h2>
-          Input Box
-        </h2>
         <textarea value={data.map(item => `${item.amount} ${item.phoneNumber}`).join('\n')} onChange={handleDataChange}></textarea>
       </div>
       {data.map((item, index) => (
@@ -56,19 +42,12 @@ function App() {
             <input className='phoneNumber' type="text" name='phoneNumber' value={item.phoneNumber} onClick={handleCopyToClipboard} readOnly />
           </label>
           <label>
-            <input onClick={(event) => {
-              handlePasteFromClipboard(event);
-              handleChange(event, index)
-            }} className='transactions' type="text" name='transactionId' value={item.transactionId} />
+            <input className='transactions' type="text" name='transactionId' value={item.transactionId} onChange={(event) => handleChange(event, index)} />
           </label>
         </div>
       ))}
-
       <div className="inputArea">
-        <h2>
-          Output Box
-        </h2>
-        <textarea onClick={handleCopyToClipboard} value={data.map(item => `${item.amount} ${item.phoneNumber} ${item.transactionId}`).join('\n')} readOnly></textarea>
+        <textarea value={data.map(item => `${item.amount} ${item.phoneNumber} ${item.transactionId}`).join('\n')} readOnly></textarea>
       </div>
     </div>
   );
