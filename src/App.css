@@ -82,3 +82,19 @@ h2 {
   border-radius: 5px;
   overflow: hidden;
 }
+
+button {
+  background-color: tomato;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
