@@ -31,7 +31,22 @@ function App() {
   return (
     <div className='main'>
       <div className="inputArea">
+        <h2>
+          Input Area
+        </h2>
         <textarea value={data.map(item => `${item.amount} ${item.phoneNumber}`).join('\n')} onChange={handleDataChange}></textarea>
+      </div>
+
+      <div className='singleData heading'>
+        <label>
+          <input className='amount' type="text" name='amount' value={"Amount"} readOnly />
+        </label>
+        <label>
+          <input className='phoneNumber' type="text" name='phoneNumber' value={"Phone Number"} readOnly />
+        </label>
+        <label>
+          <input className='transactions' type="text" name='transactionId' value={"Transaction Id"} readOnly />
+        </label>
       </div>
       {data.map((item, index) => (
         <div key={index} className='singleData'>
@@ -47,6 +62,9 @@ function App() {
         </div>
       ))}
       <div className="inputArea">
+        <h2>
+          Output Area
+        </h2>
         <textarea value={data.map(item => `${item.amount} ${item.phoneNumber} ${item.transactionId}`).join('\n')} readOnly></textarea>
       </div>
     </div>
