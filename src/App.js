@@ -18,8 +18,8 @@ function App() {
   const handleDataChange = (event) => {
     setData(
       event.target.value.split("\n").map((line) => {
-        const [amount, phoneNumber] = line.split(/\s+/);
-        return { amount, phoneNumber, transactionId: "" };
+        const [sentPayment, phoneNumber] = line.split(/\s+/);
+        return { sentPayment, phoneNumber, trxID: "" };
       })
     );
   };
@@ -30,13 +30,37 @@ function App() {
     event.target.classList.add("copied");
   };
 
+  // sent data to server
+  const handleSendData = () => {
+    // make all amount number
+    const newData = data.map((item) => {
+      return { ...item, sentPayment: Number(item.sentPayment) };
+    });
+
+    fetch("https://sss-tawny.vercel.app/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(data);
+
   return (
     <div className="main">
       <div className="inputArea">
         <h2>Input Area</h2>
         <textarea
           value={data
-            .map((item) => `${item.amount} ${item.phoneNumber}`)
+            .map((item) => `${item.sentPayment} ${item.phoneNumber}`)
             .join("\n")}
           onChange={handleDataChange}
         ></textarea>
@@ -52,7 +76,7 @@ function App() {
               <input
                 className="amount"
                 type="text"
-                name="amount"
+                name="sentPayment"
                 value={"Amount"}
                 readOnly
               />
@@ -70,7 +94,7 @@ function App() {
               <input
                 className="transactions"
                 type="text"
-                name="transactionId"
+                name="trxID"
                 value={"Transaction Id"}
                 readOnly
               />
@@ -82,9 +106,9 @@ function App() {
                 <input
                   className="amount"
                   type="text"
-                  name="amount"
+                  name="sentPayment"
                   onClick={handleCopyToClipboard}
-                  value={item.amount}
+                  value={item.sentPayment}
                   readOnly
                 />
               </label>
@@ -102,8 +126,8 @@ function App() {
                 <input
                   className="transactions"
                   type="text"
-                  name="transactionId"
-                  value={item.transactionId}
+                  name="trxID"
+                  value={item.trxID}
                   onChange={(event) => handleChange(event, index)}
                 />
               </label>
@@ -115,22 +139,25 @@ function App() {
               value={data
                 .map(
                   (item) =>
-                    `${item.amount} ${item.phoneNumber} ${item.transactionId}`
+                    `${item.sentPayment} ${item.phoneNumber} ${item.trxID}`
                 )
                 .join("\n")}
               readOnly
             ></textarea>
             <p>
               Total Ammount:{" "}
-              <b> {data.reduce((acc, item) => acc + Number(item.amount), 0)}</b>
+              <b>
+                {" "}
+                {data.reduce((acc, item) => acc + Number(item.sentPayment), 0)}
+              </b>
             </p>
           </div>
-          <div className="text-center">
+          <div className="text-center" onClick={handleSendData}>
             <TelegramShareButton
               url={data
                 .map(
                   (item) =>
-                    `${item.amount} ${item.phoneNumber} ${item.transactionId}`
+                    `${item.sentPayment} ${item.phoneNumber} ${item.trxID}`
                 )
                 .join("\n")}
             >
