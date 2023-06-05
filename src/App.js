@@ -164,12 +164,6 @@ function App() {
               <button>Share</button>
             </TelegramShareButton>
           </div>
-          <div className="text-center">
-            Made with ❤️ by{" "}
-            <a href="//riaj.xyz" target="_blank" rel="noreferrer">
-              riaj
-            </a>
-          </div>
         </>
       )}
     </div>
