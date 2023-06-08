@@ -5,7 +5,6 @@ body {
   background-color: #f5f5f5;
   margin: auto auto;
   padding: 10px;
-
   min-height: 100vh;
   background-image: url("https://picsum.photos/2000/3000");
   background-size: cover;
@@ -123,4 +122,26 @@ b {
 .TelegramShareButton {
   display: inline-block;
   margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 0;
+  }
+  texarea {
+    height: 100px;
+  }
+  .main {
+    border-radius: 0;
+    box-shadow: none;
+    width: 80%;
+    margin: 20px auto;
+  }
+  .inputArea {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  .outputArea {
+    margin-top: 0;
+  }
 }
