@@ -5,6 +5,7 @@ import React, { useState } from "react";
 
 function App() {
   const [data, setData] = useState([]);
+  const [exportStatus, setExportStatus] = useState(false);
 
   const handleChange = (event, index) => {
     const { name, value } = event.target;
@@ -133,37 +134,52 @@ function App() {
               </label>
             </div>
           ))}
-          <div className="inputArea">
-            <h2>Output Area</h2>
-            <textarea
-              value={data
-                .map(
-                  (item) =>
-                    `${item.sentPayment} ${item.phoneNumber} ${item.trxID}`
-                )
-                .join("\n")}
-              readOnly
-            ></textarea>
-            <p>
-              Total Ammount:{" "}
-              <b>
-                {" "}
-                {data.reduce((acc, item) => acc + Number(item.sentPayment), 0)}
-              </b>
-            </p>
-          </div>
-          <div className="text-center" onClick={handleSendData}>
-            <TelegramShareButton
-              url={data
-                .map(
-                  (item) =>
-                    `${item.sentPayment} ${item.phoneNumber} ${item.trxID}`
-                )
-                .join("\n")}
-            >
-              <button>Share</button>
-            </TelegramShareButton>
-          </div>
+          <button
+            onClick={() => {
+              setExportStatus(true);
+              handleSendData();
+            }}
+          >
+            Export
+          </button>
+          {exportStatus && (
+            <>
+              <div className="inputArea">
+                <h2>Output Area</h2>
+                <textarea
+                  value={data
+                    .map(
+                      (item) =>
+                        `${item.sentPayment} ${item.phoneNumber} ${item.trxID}`
+                    )
+                    .join("\n")}
+                  readOnly
+                ></textarea>
+                <p>
+                  Total Ammount:{" "}
+                  <b>
+                    {" "}
+                    {data.reduce(
+                      (acc, item) => acc + Number(item.sentPayment),
+                      0
+                    )}
+                  </b>
+                </p>
+              </div>
+              <div className="text-center">
+                <TelegramShareButton
+                  url={data
+                    .map(
+                      (item) =>
+                        `${item.sentPayment} ${item.phoneNumber} ${item.trxID}`
+                    )
+                    .join("\n")}
+                >
+                  <button>Share</button>
+                </TelegramShareButton>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
