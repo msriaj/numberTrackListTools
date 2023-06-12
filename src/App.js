@@ -134,6 +134,26 @@ function App() {
               </label>
             </div>
           ))}
+          <p>
+
+                  Total Ammount:{" "}
+
+                  <b>
+
+                    {" "}
+
+                    {data.reduce(
+
+                      (acc, item) => acc + Number(item.sentPayment),
+
+                      0
+
+                    )}
+
+                  </b>
+
+                </p>
+          
           <button
             onClick={() => {
               setExportStatus(true);
@@ -155,16 +175,7 @@ function App() {
                     .join("\n")}
                   readOnly
                 ></textarea>
-                <p>
-                  Total Ammount:{" "}
-                  <b>
-                    {" "}
-                    {data.reduce(
-                      (acc, item) => acc + Number(item.sentPayment),
-                      0
-                    )}
-                  </b>
-                </p>
+                
               </div>
               <div className="text-center">
                 <TelegramShareButton
