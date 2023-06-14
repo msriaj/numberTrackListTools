@@ -134,26 +134,18 @@ function App() {
               </label>
             </div>
           ))}
-          <p>
+          <p align="center">
+            Total Ammount:{" "}
+            <b>
+              {" "}
+              {data.reduce(
+                (acc, item) => acc + Number(item.sentPayment),
 
-                  Total Ammount:{" "}
+                0
+              )}
+            </b>
+          </p>
 
-                  <b>
-
-                    {" "}
-
-                    {data.reduce(
-
-                      (acc, item) => acc + Number(item.sentPayment),
-
-                      0
-
-                    )}
-
-                  </b>
-
-                </p>
-          
           <button
             onClick={() => {
               setExportStatus(true);
@@ -167,6 +159,7 @@ function App() {
               <div className="inputArea">
                 <h2>Output Area</h2>
                 <textarea
+                  onClick={handleCopyToClipboard}
                   value={data
                     .map(
                       (item) =>
@@ -175,7 +168,6 @@ function App() {
                     .join("\n")}
                   readOnly
                 ></textarea>
-                
               </div>
               <div className="text-center">
                 <TelegramShareButton
